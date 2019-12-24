@@ -1,0 +1,19 @@
+version: v1.0
+name: Initial Pipeline
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: Tests
+    task:
+      jobs:
+        - name: Run JUnit 5 tests
+          commands:
+            - checkout
+            - >-
+              java -jar
+              "src/test/resources/junit-platform-console-standalone-1.5.2.jar"
+              -cp target/main/java -cp target/test/java
+              --scan-classpath=target/test/java --fail-if-no-tests
+              --disable-banner
