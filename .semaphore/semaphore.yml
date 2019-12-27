@@ -11,9 +11,4 @@ blocks:
         - name: Run JUnit 5 tests
           commands:
             - checkout
-            - >-
-              java -jar
-              "src/test/resources/junit-platform-console-standalone-1.5.2.jar"
-              -cp target/main/java -cp target/test/java
-              --scan-classpath=target/test/java --fail-if-no-tests
-              --disable-banner
+            - ./compile_and_run_tests.sh
