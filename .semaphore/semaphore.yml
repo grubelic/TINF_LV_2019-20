@@ -11,8 +11,8 @@ blocks:
         - name: Run JUnit 5 tests
           commands:
             - checkout
-            - mkdir "target/main/java"
-            - mkdir "target/test/java"
+            - mkdir -p target/main/java
+            - mkdir -p target/test/java
             - >-
               javac -d target/main/java
               src/main/java/hr/fer/tinf/lab/zad3/*.java
