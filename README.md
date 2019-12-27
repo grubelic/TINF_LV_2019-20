@@ -6,8 +6,8 @@ Implementation of software that enables user to input an arbitrary number of cod
  1) Codeword length _n_ and message length _k_.
  2) Is code _K_ linear?
  3) Standard array of code _K_.
- 4) Probability of correct decoding of codeword.
+ 4) Probability of correct decoding of a codeword.
 
 The software can also decode arbitrary codeword and print decision-making summary for the decoding.
 
-The software is still being developed so it may not have all the listed features implemented.
+The project is still under development so it may not have all the listed features implemented.
