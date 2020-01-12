@@ -10,4 +10,5 @@ Implementation of software that enables user to input an arbitrary number of cod
 
 The software can also decode arbitrary codeword and print decision-making summary for the decoding.
 
-The project is still under development so it may not have all the listed features implemented.
+To start the program use compile\_and\_run script. Program manual is in src/main/resources/README.txt. It can also be accessed in program itself (help command).
+

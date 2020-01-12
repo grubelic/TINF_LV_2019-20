@@ -1,0 +1,29 @@
+Welcome! For help enter "help"
+>>n = 6, k = 0
+>Codeword 000000 successfully added.
+Codeword 001011 successfully added.
+Codeword 010110 successfully added.
+Codeword 011101 successfully added.
+Codeword 100101 successfully added.
+Codeword 101110 successfully added.
+Codeword 110011 successfully added.
+Codeword 111000 successfully added.
+>n: 6
+>k: 3
+>The code is linear.
+>Code distance: 3
+>The code can correct 1 error(s).
+>[000000, 101110, 010110, 011101, 110011, 100101, 001011, 111000]
+[100000, 001110, 110110, 111101, 010011, 000101, 101011, 011000]
+[010000, 111110, 000110, 001101, 100011, 110101, 011011, 101000]
+[001000, 100110, 011110, 010101, 111011, 101101, 000011, 110000]
+[000100, 101010, 010010, 011001, 110111, 100001, 001111, 111100]
+[000010, 101100, 010100, 011111, 110001, 100111, 001001, 111010]
+[000001, 101111, 010111, 011100, 110010, 100100, 001010, 111001]
+>0.9391792985549994
+>Error: Codeword doesn't match this block code's length n (6)
+>Error detected.
+Codeword found in standard array.
+Error vector: 000010
+Correct codeword (input - error): 101110
+>
