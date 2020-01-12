@@ -1,0 +1,13 @@
+c.new 6
+c.print
+c.add 000000 001011 010110 011101 100101 101110 110011 111000
+c.n
+c.k
+c.linear
+c.distance
+c.t
+c.sa
+c.p 0.07
+c.decode 10
+c.decode 101100
+exit

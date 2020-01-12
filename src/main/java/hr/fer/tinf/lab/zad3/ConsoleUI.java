@@ -12,8 +12,8 @@ import java.util.Scanner;
 
 public class ConsoleUI {
 	
-	private static Map<String, BinaryBlockCode> variables = new HashMap<>();;
-	
+	private static Map<String, BinaryBlockCode> variables = new HashMap<>();
+
 	public static String getHelp() {
 		try {
 			List<String> lines = Files.readAllLines(
@@ -104,11 +104,10 @@ public class ConsoleUI {
 		try {
 			switch (method) {
 			case "n":
-				return Integer.toString(bbc.getN());
+				return "n: " + bbc.getN();
 			case "k":
-				return Integer.toString(bbc.getK());
+				return "k: " + bbc.getK();
 			case "sa":
-				;
 			case "standardArray":
 				BinaryVector[][] sa = bbc.getStandardArray();
 				sb = new StringBuilder();
@@ -116,6 +115,7 @@ public class ConsoleUI {
 					sb.append(Arrays.toString(bva));
 					sb.append('\n');
 				}
+				sb.deleteCharAt(sb.length() - 1);
 				return sb.toString();
 			case "decode":
 				if (args == null || args.length == 0) {
@@ -140,7 +140,8 @@ public class ConsoleUI {
 					try {
 						cw = new BinaryVector(temp[0]);
 						bbc.addCodeWord(cw, temp[1]);
-						sb.append("Codeword " + cw + " succesfully added.\n");
+						sb.append("Codeword " + cw + " successfully added.");
+						if (i != args.length - 1) sb.append('\n');
 					} catch (RuntimeException re) {
 						throw new RuntimeException(
 							sb.toString() + re.getMessage(), re
@@ -155,22 +156,40 @@ public class ConsoleUI {
 					);
 				}
 				sb = new StringBuilder();
-				for (int i = 0; i < args.length; i++) {
+				for (String arg : args) {
 					try {
-						cw = new BinaryVector(args[i]);
+						cw = new BinaryVector(arg);
 						bbc.removeCodeword(cw);
-						sb.append("Codeword " + cw + " succesfully removed.\n");
+						sb.append("Codeword " + cw + " successfully removed.\n");
 					} catch (RuntimeException re) {
 						throw new RuntimeException(
 							sb.toString() + re.getMessage(), re
 						);
 					}
 				}
+				sb.deleteCharAt(sb.length() - 1);
 				return sb.toString();
 			case "linear":
-				return bbc.isLinear() ? "Yes" : "No";
+				return "The code is" + (bbc.isLinear() ? "" : "n't")
+					+ " linear.";
 			case "p":
-				return Double.toString(bbc.correctDecodingProbability());
+				if (args == null || args.length == 0) {
+					throw new IllegalArgumentException(
+						"No codeword provided for decoding."
+					);
+				}
+				double p = Double.parseDouble(args[0]);
+				return Double.toString(bbc.correctDecodingProbability(p));
+			case "t":
+				return "The code can correct " + bbc.getT() + " error(s).";
+			case "distance":
+			case "dist":
+			case "d":
+				return "Code distance: " + bbc.distance();
+			case "print":
+				return bbc.toString();
+			case "safety":
+				return (bbc.toggleSafety() ? "Safe" : "Unsafe") + " decoding";
 			default:
 				return "Error: Method " + method + " is not implemented.";
 			}

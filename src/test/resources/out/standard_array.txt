@@ -1,0 +1,28 @@
+Welcome! For help enter "help"
+>>Error: Method islinear is not implemented.
+>Codeword 00000 successfully added.
+Codeword 11100 successfully added.
+Codeword 00111 successfully added.
+Codeword 11011 successfully added.
+>[00000, 11100, 11011, 00111]
+[10000, 01100, 01011, 10111]
+[01000, 10100, 10011, 01111]
+[00100, 11000, 11111, 00011]
+[00010, 11110, 11001, 00101]
+[00001, 11101, 11010, 00110]
+>>Codeword 000000 successfully added.
+Codeword 001011 successfully added.
+Codeword 010110 successfully added.
+Codeword 011101 successfully added.
+Codeword 100101 successfully added.
+Codeword 101110 successfully added.
+Codeword 110011 successfully added.
+Codeword 111000 successfully added.
+>[000000, 101110, 010110, 011101, 110011, 100101, 001011, 111000]
+[100000, 001110, 110110, 111101, 010011, 000101, 101011, 011000]
+[010000, 111110, 000110, 001101, 100011, 110101, 011011, 101000]
+[001000, 100110, 011110, 010101, 111011, 101101, 000011, 110000]
+[000100, 101010, 010010, 011001, 110111, 100001, 001111, 111100]
+[000010, 101100, 010100, 011111, 110001, 100111, 001001, 111010]
+[000001, 101111, 010111, 011100, 110010, 100100, 001010, 111001]
+>
