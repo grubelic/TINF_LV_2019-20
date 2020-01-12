@@ -1,0 +1,9 @@
+a.new 1
+a.new
+a.delete
+a.delete
+help
+a.new 6
+a.add 000001
+a.linear
+exit

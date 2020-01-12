@@ -1,16 +1,181 @@
 package hr.fer.tinf.lab.zad3;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class ConsoleUI {
+	
+	private static Map<String, BinaryBlockCode> variables = new HashMap<>();;
+	
+	public static String getHelp() {
+		try {
+			List<String> lines = Files.readAllLines(
+				Paths.get("src/main/resources/README.txt")
+			);
+			return String.join("\n", lines);
+		} catch (NoSuchFileException nsfe) {
+			return "Could not find src/main/resources/README.txt. Make sure cwd"
+					+ " is project root";
+		} catch (IOException e) {
+			e.printStackTrace();
+			return e.getMessage();
+		}
+	}
+	
     public static void main(String... arguments) {
         Scanner sc = new Scanner(System.in);
+        System.out.println("Welcome! For help enter \"help\"");
         while (true) {
+        	System.err.flush();
             System.out.print(">");
             System.out.flush();
-            String commandString = sc.next();
-            if ("exit".equals(commandString)) break;
+            String commandString = sc.nextLine();
+            if ("exit".equals(commandString.toLowerCase())) break;
+            if ("".equals(commandString.trim())) continue;
+            if ("help".equals(commandString.toLowerCase())) {
+            	System.out.println(getHelp());
+            	continue;
+            }
+            
+            String[] splitCommand = commandString.split(" ");
+            int pointIndex = splitCommand[0].indexOf('.');
+            
+            if (pointIndex == -1) {
+        		System.err.println(
+        			"Error: first token has to be 'variable.method'"
+				);
+        		continue;
+            }
+            String variable = splitCommand[0].substring(0, pointIndex);
+            String method = splitCommand[0].substring(pointIndex + 1);
+            
+            if ("new".equals(method)) {
+            	if (splitCommand.length > 1) {
+            		try {
+            			int n = Integer.parseInt(splitCommand[1]);
+            			variables.put(variable, new BinaryBlockCode(n));
+            		} catch (NumberFormatException nfe) {
+            			System.err.println(
+        					"Error: Block size has to be a natural number"
+    					);
+            		} catch (IllegalArgumentException iae) {
+            			System.err.println("Error: " + iae.getMessage());
+            		}
+            	} else {
+            		System.err.println("Error: please define block size");
+            	}
+            } else if ("delete".equals(method)) {
+            	variables.remove(variable);
+        	} else {
+            	if (variables.containsKey(variable)) {
+            		String[] args = Arrays.copyOfRange(
+        				splitCommand, 1, splitCommand.length
+    				);
+            		String msg = call(variables.get(variable), method, args);
+            		if (msg.startsWith("Error: ")) {
+            			System.err.println(msg);
+            		} else {
+            			System.out.println(msg);
+            		}
+            	} else {
+            		System.err.println(
+            			"Error: Variable not defined. Please use " + variable +
+            			".new n to define the block code of size n"
+    				);
+            	}
+            }
+            
         }
         sc.close();
     }
+    
+	public static String call(
+		BinaryBlockCode bbc, String method, String... args
+	) {
+		BinaryVector cw;
+		StringBuilder sb;
+		try {
+			switch (method) {
+			case "n":
+				return Integer.toString(bbc.getN());
+			case "k":
+				return Integer.toString(bbc.getK());
+			case "sa":
+				;
+			case "standardArray":
+				BinaryVector[][] sa = bbc.getStandardArray();
+				sb = new StringBuilder();
+				for (BinaryVector[] bva : sa) {
+					sb.append(Arrays.toString(bva));
+					sb.append('\n');
+				}
+				return sb.toString();
+			case "decode":
+				if (args == null || args.length == 0) {
+					throw new IllegalArgumentException(
+						"No codeword provided for decoding."
+					);
+				}
+				cw = new BinaryVector(args[0]);
+				return bbc.decode(cw);
+			case "add":
+				if (args == null || args.length < 1) {
+					throw new IllegalArgumentException(
+						"Please define a codeword to add."
+					);
+				}
+				sb = new StringBuilder();
+				for (int i = 0; i < args.length; i++) {
+					String[] temp = { args[i], null };
+					if (args[i].contains(":")) {
+						temp = args[i].split(":");
+					}
+					try {
+						cw = new BinaryVector(temp[0]);
+						bbc.addCodeWord(cw, temp[1]);
+						sb.append("Codeword " + cw + " succesfully added.\n");
+					} catch (RuntimeException re) {
+						throw new RuntimeException(
+							sb.toString() + re.getMessage(), re
+						);
+					}
+				}
+				return sb.toString();
+			case "remove":
+				if (args == null || args.length < 1) {
+					throw new IllegalArgumentException(
+						"Please define a codeword to remove."
+					);
+				}
+				sb = new StringBuilder();
+				for (int i = 0; i < args.length; i++) {
+					try {
+						cw = new BinaryVector(args[i]);
+						bbc.removeCodeword(cw);
+						sb.append("Codeword " + cw + " succesfully removed.\n");
+					} catch (RuntimeException re) {
+						throw new RuntimeException(
+							sb.toString() + re.getMessage(), re
+						);
+					}
+				}
+				return sb.toString();
+			case "linear":
+				return bbc.isLinear() ? "Yes" : "No";
+			case "p":
+				return Double.toString(bbc.correctDecodingProbability());
+			default:
+				return "Error: Method " + method + " is not implemented.";
+			}
+		} catch (Exception e) {
+			return "Error: " + e.getMessage();
+		}
+	}
 }
