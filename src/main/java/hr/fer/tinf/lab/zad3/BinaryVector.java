@@ -82,6 +82,12 @@ public class BinaryVector {
         return bitArray.length;
     }
 
+    public int weight() {
+        int result = 0;
+        for (boolean bit : bitArray) result += (bit ? 1 : 0);
+        return result;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -133,5 +139,28 @@ public class BinaryVector {
         if (!factor) {
             set(false);
         }
+    }
+    
+    public BinaryVector plus(BinaryVector v) {
+    	if (v.dim() != dim()) {
+    		throw new IllegalArgumentException("Vector dimensions don't match");
+    	}
+    	BinaryVector result = new BinaryVector(bitArray.length);
+        for (int i = 0; i < bitArray.length; i++) {
+            result.set(i, bitArray[i] ^ v.get(i));
+        }
+        return result;
+    }
+
+    public BinaryVector minus(BinaryVector v) {
+        return plus(v);
+    }
+    
+    public BinaryVector times(boolean factor) {
+    	return factor ? new BinaryVector(bitArray) : new BinaryVector(dim());
+    }
+
+    public static int dist (BinaryVector bv1, BinaryVector bv2) {
+        return bv1.plus(bv2).weight();
     }
 }
