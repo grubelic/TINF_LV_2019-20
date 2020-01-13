@@ -8,8 +8,6 @@ public class BinaryBlockCode {
 	private final Set<BinaryVector> vectorSpace = new HashSet<>();
 
 	private final int n;
-	private int k;
-
 	private boolean safeDecoding = true;
 
 	public boolean toggleSafety() {
@@ -35,7 +33,8 @@ public class BinaryBlockCode {
 	}
 
 	public int getK() {
-		return k;
+		if (codewords.size() == 0) return 0;
+		return (int) Math.ceil(Math.log(codewords.size()) / Math.log(2));
 	}
 
 	public boolean isLinear() {
@@ -184,7 +183,6 @@ public class BinaryBlockCode {
 		codewords.clear();
 		vectorSpace.clear();
 		vectorSpace.add(new BinaryVector(n));
-		k = 0;
 		for (Map.Entry<BinaryVector, String> e : temp) {
 			if (!e.getKey().equals(v)) {
 				addCodeWord(e.getKey(), e.getValue());
@@ -211,7 +209,6 @@ public class BinaryBlockCode {
         	}
         }  else {
         	if (!vectorSpace.contains(newCodeword)) {
-        		k++;
 				Set<BinaryVector> temp = new HashSet<>();
         		for (BinaryVector bv : vectorSpace) {
         			temp.add(bv.plus(newCodeword));
@@ -233,7 +230,7 @@ public class BinaryBlockCode {
 			}
 			sb.append('\n');
 		}
-		sb.append("n = ").append(n).append(", k = ").append(k);
+		sb.append("n = ").append(n).append(", k = ").append(getK());
 		return sb.toString();
 	}
 }
