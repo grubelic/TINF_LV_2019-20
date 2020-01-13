@@ -20,7 +20,7 @@ Codeword 111000 successfully added.
 [000100, 101010, 010010, 011001, 110111, 100001, 001111, 111100]
 [000010, 101100, 010100, 011111, 110001, 100111, 001001, 111010]
 [000001, 101111, 010111, 011100, 110010, 100100, 001010, 111001]
->0.9391792985549994
+>Correct decoding probability: 0.9391792985549994
 >Error: Codeword doesn't match this block code's length n (6)
 >Error detected.
 Codeword found in standard array.

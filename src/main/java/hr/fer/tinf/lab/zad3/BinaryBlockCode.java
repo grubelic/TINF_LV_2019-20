@@ -41,6 +41,11 @@ public class BinaryBlockCode {
 		return vectorSpace.size() == codewords.size();
 	}
 
+	/**
+	 * Creates standard array by appending vectors of minimal weight as long as
+	 * they are not present in standard array
+	 * @return standard array of the block code
+	 */
 	public BinaryVector[][] getStandardArray() {
 		List<BinaryVector[]> sArray = new ArrayList<>();
 		sArray.add(new BinaryVector[codewords.size()]);
@@ -190,6 +195,11 @@ public class BinaryBlockCode {
 		}
 	}
 
+	/**
+	 * Adds a vector and if it's not collinear with others, extends vector space
+	 * @param newCodeword Codeword
+	 * @param newSymbol Symbol
+	 */
 	public void addCodeWord(BinaryVector newCodeword, String newSymbol) {
         if (newCodeword.dim() != n) {
             throw new IllegalArgumentException(

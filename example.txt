@@ -1,0 +1,32 @@
+Welcome! For help enter "help"
+>a.new 5
+>a.add 11100 00111 11011
+Codeword 11100 successfully added.
+Codeword 00111 successfully added.
+Codeword 11011 successfully added.
+>a.add 00000
+Codeword 00000 successfully added.
+>a.linear
+The code is linear.
+>a.p 0.1
+Correct decoding probability: 0.9185399999999999
+>a.decode 00101
+Error detected.
+Codeword found in standard array.
+Error vector: 00010
+Correct codeword (input - error): 00111
+>a.sa
+[00000, 11100, 11011, 00111]
+[10000, 01100, 01011, 10111]
+[01000, 10100, 10011, 01111]
+[00100, 11000, 11111, 00011]
+[00010, 11110, 11001, 00101]
+[00001, 11101, 11010, 00110]
+>a.k
+k: 2
+>a.t
+The code can correct 1 error(s).
+>a.d
+Code distance: 3
+>
+

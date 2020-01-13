@@ -14,6 +14,10 @@ public class ConsoleUI {
 	
 	private static Map<String, BinaryBlockCode> variables = new HashMap<>();
 
+	/**
+	 * Method used for retrieving content of src/main/resources/README.txt
+	 * @return content of src/main/resources/README.txt
+	 */
 	public static String getHelp() {
 		try {
 			List<String> lines = Files.readAllLines(
@@ -28,7 +32,11 @@ public class ConsoleUI {
 			return e.getMessage();
 		}
 	}
-	
+
+	/**
+	 * Main method that includes main loop from which all the methods are called
+	 * @param arguments program arguments (ignored)
+	 */
     public static void main(String... arguments) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Welcome! For help enter \"help\"");
@@ -87,7 +95,7 @@ public class ConsoleUI {
             	} else {
             		System.err.println(
             			"Error: Variable not defined. Please use " + variable +
-            			".new n to define the block code of size n"
+            			".new n to define a block code of size n"
     				);
             	}
             }
@@ -95,7 +103,14 @@ public class ConsoleUI {
         }
         sc.close();
     }
-    
+
+	/**
+	 * Handles method calls
+	 * @param bbc binary block code whose method is being called
+	 * @param method method name or abbreviation
+	 * @param args arguments for the method
+	 * @return Feedback for user about command execution
+	 */
 	public static String call(
 		BinaryBlockCode bbc, String method, String... args
 	) {
@@ -179,7 +194,8 @@ public class ConsoleUI {
 					);
 				}
 				double p = Double.parseDouble(args[0]);
-				return Double.toString(bbc.correctDecodingProbability(p));
+				return "Correct decoding probability: "
+					+ bbc.correctDecodingProbability(p);
 			case "t":
 				return "The code can correct " + bbc.getT() + " error(s).";
 			case "distance":
